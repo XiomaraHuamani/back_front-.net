@@ -1,0 +1,5 @@
+﻿Eliminar las carpetas de migraciones, ubicarse en la carpeta principal de LocalizaME y ejecutar el comando en la CLI
+dotnet ef migrations add Actualizacion --context LocalizameDbContext --project=LocalizaME.DataAccess --startup-project=LocalizaME.Api
+
+Actualizar la base de datos, ubicarse en la carpeta principal LocalizaME y ejecutar el comando en la CLI
+dotnet ef database update --project LocalizaME.DataAccess --startup-project LocalizaME.Api

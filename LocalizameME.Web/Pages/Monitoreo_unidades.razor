@@ -1,0 +1,61 @@
+﻿@page "/Monitoreo_unidades"
+
+<h3>Filterable Table</h3>
+
+<p>Type something in the input field to search the table for first names, last names or emails:</p>
+<input class="form-control" @bind="searchTerm" type="text" placeholder="Search..">
+<br>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in filteredPeople)
+        {
+            <tr>
+                <td>@person.FirstName</td>
+                <td>@person.LastName</td>
+                <td>@person.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Person> people = new List<Person>
+{
+        new Person { FirstName = "John", LastName = "Doe", Email = "john@example.com" },
+        new Person { FirstName = "Mary", LastName = "Moe", Email = "mary@mail.com" },
+        new Person { FirstName = "July", LastName = "Dooley", Email = "july@greatstuff.com" },
+        new Person { FirstName = "Anja", LastName = "Ravendale", Email = "a_r@test.com" }
+    };
+
+    private string searchTerm = string.Empty;
+
+    private IEnumerable<Person> filteredPeople
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+                return people;
+
+            var lowerCaseSearchTerm = searchTerm.ToLower();
+            return people.Where(p =>
+                p.FirstName.ToLower().Contains(lowerCaseSearchTerm) ||
+                p.LastName.ToLower().Contains(lowerCaseSearchTerm) ||
+                p.Email.ToLower().Contains(lowerCaseSearchTerm));
+        }
+    }
+
+    public class Person
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+    }
+}
